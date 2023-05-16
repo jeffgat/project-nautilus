@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type BaseOperationType = (input: number) => void;
+type BaseOperationType = (input: string) => void;
 
 interface CalculatorState {
     value: string;
@@ -14,22 +14,22 @@ interface CalculatorState {
 
 export const useCalculatorStore = create<CalculatorState>((set) => ({
     value: '0',
-    updateValue: (value) => set(() => ({ value })),
+    updateValue: (value) => set({ value: value }),
     add: (input) =>
         set((state) => ({
-            value: (parseFloat(state.value) + input).toString()
+            value: (parseFloat(state.value) + parseFloat(input)).toString()
         })),
     subtract: (input) =>
         set((state) => ({
-            value: (parseFloat(state.value) - input).toString()
+            value: (parseFloat(state.value) - parseFloat(input)).toString()
         })),
     multiply: (input) =>
         set((state) => ({
-            value: (parseFloat(state.value) * input).toString()
+            value: (parseFloat(state.value) * parseFloat(input)).toString()
         })),
     divide: (input) =>
         set((state) => ({
-            value: (parseFloat(state.value) / input).toString()
+            value: (parseFloat(state.value) / parseFloat(input)).toString()
         })),
     clear: () => set({ value: '0' })
 }));

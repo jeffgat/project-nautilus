@@ -9,7 +9,7 @@ const Button = ({ value, action, className, ...props }: ButtonProps) => {
         <button
             className={
                 className ??
-                `flex items-center justify-center rounded-md h-12 bg-blue-600 text-neutral-50 text-lg font-medium shadow-sm hover:bg-blue-700`
+                `flex items-center justify-center rounded-md h-12 bg-blue-600 text-neutral-50 text-lg font-medium shadow-sm hover:bg-blue-700 active:bg-blue-800`
             }
             onClick={action}
             {...props}
