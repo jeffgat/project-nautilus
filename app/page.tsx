@@ -1,13 +1,19 @@
 'use client';
 import { useCalculatorStore } from '../stores/calculator';
-import { buttons } from './_buttons';
-import { Button } from './components';
+import { CalculatorButtons, CalculatorLayout } from './components';
+
+const MAX_DIGITS_TO_DISPLAY = 19;
 
 export default function Home() {
-    const [value, updateValue] = useCalculatorStore((state) => [
-        state.value,
-        state.updateValue
-    ]);
+    const value = useCalculatorStore((state) => state.value);
+
+    const convertToScientificNotation = (value: string) => {
+        if (value.length > MAX_DIGITS_TO_DISPLAY) {
+            return parseFloat(value).toExponential().toString();
+        } else {
+            return value;
+        }
+    };
 
     return (
         <main className="flex flex-1 flex-col justify-center min-h-screen">
@@ -20,18 +26,12 @@ export default function Home() {
                 </p>
             </div>
 
-            <div className="mt-8 mx-auto w-full max-w-md">
-                <div className="bg-neutral-850 p-8 shadow rounded-lg">
-                    <div className="grid grid-cols-4 gap-2">
-                        <div className="flex items-center justify-end rounded-md col-span-4 h-16 px-4 mb-4 bg-neutral-700 text-white text-xl">
-                            {value}
-                        </div>
-                        {buttons.map((button) => (
-                            <Button value={button.value} key={button.value} />
-                        ))}
-                    </div>
+            <CalculatorLayout>
+                <div className="flex items-center justify-end rounded-md col-span-4 h-16 px-4 mb-4 bg-neutral-700 text-white text-xl">
+                    {convertToScientificNotation(value)}
                 </div>
-            </div>
+                <CalculatorButtons />
+            </CalculatorLayout>
         </main>
     );
 }

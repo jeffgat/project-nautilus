@@ -3,8 +3,8 @@ import { create } from 'zustand';
 type BaseOperationType = (input: number) => void;
 
 interface CalculatorState {
-    value: number;
-    updateValue: (value: number) => void;
+    value: string;
+    updateValue: (value: string) => void;
     add: BaseOperationType;
     subtract: BaseOperationType;
     multiply: BaseOperationType;
@@ -13,11 +13,23 @@ interface CalculatorState {
 }
 
 export const useCalculatorStore = create<CalculatorState>((set) => ({
-    value: 0,
+    value: '0',
     updateValue: (value) => set(() => ({ value })),
-    add: (input) => set((state) => ({ value: state.value + input })),
-    subtract: (input) => set((state) => ({ value: state.value - input })),
-    multiply: (input) => set((state) => ({ value: state.value * input })),
-    divide: (input) => set((state) => ({ value: state.value / input })),
-    clear: () => set({ value: 0 }),
+    add: (input) =>
+        set((state) => ({
+            value: (parseFloat(state.value) + input).toString()
+        })),
+    subtract: (input) =>
+        set((state) => ({
+            value: (parseFloat(state.value) - input).toString()
+        })),
+    multiply: (input) =>
+        set((state) => ({
+            value: (parseFloat(state.value) * input).toString()
+        })),
+    divide: (input) =>
+        set((state) => ({
+            value: (parseFloat(state.value) / input).toString()
+        })),
+    clear: () => set({ value: '0' })
 }));
